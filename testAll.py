@@ -9,6 +9,19 @@ class TestAll():
     def __init__(self):
         self.classes = []
 
+    def runTests(self):
+        loader = unittest.TestLoader()
+        
+        suites_list = []
+        for test_class in self.classes:
+            suite = loader.loadTestsFromTestCase(test_class)
+            suites_list.append(suite)
+
+        big_suite = unittest.TestSuite(suites_list)
+
+        unittest.TextTestRunner(verbosity=2).run(big_suite)
+
+    def findFiles(self):
         #find all the files ending with a .py extension
         onlyPyfiles = [f for f in os.listdir(os.path.dirname(os.path.abspath(__file__))) if (os.path.isfile(os.path.join("", f)) and (re.match("^.*\.py$",f) != None ))]
 
